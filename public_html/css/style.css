@@ -1,0 +1,46 @@
+html {
+	background-color: #DEDEDE;	
+}
+body {
+	border: 2px solid #B3CBDE;
+	background-color: #F0F5F8;
+	padding: 40px;
+	width: 750px;
+	margin: 10px auto;
+}
+h1{
+	margin: 0px 40px;
+}
+li {
+	margin: 0px 10px 0px 10px;
+    display: inline-block;
+}
+#site-top{
+	overflow: hidden;
+}
+#nav-container{
+	width: 250px;
+	float:left;
+}
+#site-heading{
+	/*width: 150px;*/
+}
+#site-menu{
+	width: 300px;
+	float:right;
+}
+#site-login-container {
+	background-color: #B3CBDE;
+	padding: 8px;
+	width: 250px;
+	overflow: hidden;
+	float:right;
+}
+#siteControls{
+	float: right;
+	display: inline-block;
+}
+#footer{
+	text-align: center;
+	margin: 20px 0px 0px 0px;
+}
