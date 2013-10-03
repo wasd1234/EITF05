@@ -3,7 +3,7 @@
 
 <html lang="en">
 <head>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/public_html/js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="/public_html/js/scripts.js"></script>
 	<link rel="stylesheet" type="text/css" href="/public_html/css/style.css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
