@@ -12,52 +12,73 @@ function sec_session_start() {
         session_regenerate_id(); // regenerated the session, delete the old one.  
 }
 
-function login($email, $password, $mysqli) {
+function login($username , $password, $mysqli) {
    // Using prepared Statements means that SQL injection is not possible. 
-   if ($stmt = $mysqli->prepare("SELECT id, username, password, salt FROM members WHERE email = ? LIMIT 1")) { 
-      $stmt->bind_param('s', $email); // Bind "$email" to parameter.
+   if ($stmt = $mysqli->prepare("SELECT username, password_hash, salt FROM members WHERE username = ?")) { 
+      $stmt->bind_param('s', $username); // Bind "$email" to parameter.
       $stmt->execute(); // Execute the prepared query.
-      $stmt->store_result();
-      $stmt->bind_result($user_id, $username, $db_password, $salt); // get variables from result.
+      // $stmt->store_result();
+      $stmt->bind_result($username, $db_password, $salt); // get variables from result.
+      
+	  
       $stmt->fetch();
-      $password = hash('sha512', $password.$salt); // hash the password with the unique salt.
- 
-      if($stmt->num_rows == 1) { // If the user exists
+	  echo $db_password;
+	  	  
+	$options = array('salt' => $salt);
+	
+	$password = password_hash($password, PASSWORD_BCRYPT, $options);
+	
+	
+	
+	  // if(CRYPT_BLOWFISH == 1){
+      // $password = crypt($username. $password, $salt); // hash the password with the unique salt.
+//  	
+	  // }	
+ 		// echo 'db pass:';
+		// echo $db_password;
+		// echo 'inskrivet pass';
+		// echo $password;
+      // if($stmt->num_rows == 1) { // If the user exists
          // We check if the account is locked from too many login attempts
-         if(checkbrute($user_id, $mysqli) == true) { 
-            // Account is locked
-            // Send an email to user saying their account is locked
-            return false;
-         } else {
+         // if(checkbrute($user_id, $mysqli) == true) { 
+            // // Account is locked
+            // // Send an email to user saying their account is locked
+            // return false;
+         // } else {
          if($db_password == $password) { // Check if the password in the database matches the password the user submitted. 
             // Password is correct!
  
  
-               $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
- 
-               $user_id = preg_replace("/[^0-9]+/", "", $user_id); // XSS protection as we might print this value
-               $_SESSION['user_id'] = $user_id; 
-               $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
-               $_SESSION['username'] = $username;
-               $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
-               // Login successful.
+               // $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
+//  
+               // $user_id = preg_replace("/[^0-9]+/", "", $user_id); // XSS protection as we might print this value
+               // $_SESSION['user_id'] = $user_id; 
+               // $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
+               // $_SESSION['username'] = $username;
+               // $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
+               // // Login successful.
                
+               	echo "User logged in successfully!1";	
                
                return true;    
          } else {
             // Password is not correct
             // We record this attempt in the database
             $now = time();
-            $mysqli->query("INSERT INTO login_attempts (user_id, time) VALUES ('$user_id', '$now')");
+            $mysqli->query("INSERT INTO login_attempts (username, time) VALUES ('$username', '$now')");
+            
+			echo 'fel lösen';
+            
             return false;
+			
          }
       }
-      } else {
-         // No user exists. 
-         return false;
-      }
+      // } else {
+         // // No user exists. 
+         // return false;
+      // }
    }
-}
+
 
 function checkbrute($user_id, $mysqli) {
    // Get timestamp of current time
