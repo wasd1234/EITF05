@@ -18,6 +18,8 @@ defined("TEMPLATES_PATH")
 	
 	
 	
+	// https://help.github.com/articles/https-cloning-errors
+	//http://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed
 	
 	// $db_info = array(
 	// $host=>"mysql.default_host", // Host name

@@ -17,12 +17,13 @@ if(isset($_POST['action'])){
     }
 }
 function create_user(){
-	
+	if(isset($_POST['user_name']) && isset($_POST['user_password']) && isset($_POST['user_email']) && isset($_POST['user_address'])){
 		$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
-	
 		createTest('testtest', 'test24', $mysqli);
-	
-	
+		echo "Created user!";
+	}else{
+		echo "Require more info!";
+	}
 	die();
 }
 
@@ -32,8 +33,7 @@ function check_login() {
 	
 	login('test@exempel.com', '00807432eae173f652f2064bdca1b61b290b52d40e429a7d295d76a71084aa96c0233b82f1feac45529e0726559645acaed6f3ae58a286b9f075916ebf66cacc', $mysqli);
 	
-	echo "User added successfully!";
-	
+	echo "User logged in successfully!";	
 	die();
 }
 

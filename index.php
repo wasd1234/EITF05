@@ -3,10 +3,6 @@
 	require_once("resources/config.php");
     require_once(INCLUDE_PATH . "/functions.php");
 	require_once(TEMPLATES_PATH . "/header.php");
-
-
-
-
 ?>
 	<div id="content">
 	<?php
