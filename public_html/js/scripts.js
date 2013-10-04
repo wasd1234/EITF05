@@ -12,7 +12,7 @@ jQuery(document).ready(function() {
 				console.log("long: " + index);
 			}else{
 				$( this ).addClass('invalid-field');
-				$( this ).append('<p> Please enter some data </p>');
+				$( this ).append('Please enter some data');
 				console.log("short: "+ index);
 				ready = false;
 			}
@@ -57,6 +57,33 @@ jQuery(document).ready(function() {
 	    	ajax_route(action_data);    		
     	}
 	});
+	$(".btn-add-to-cart").click(function(e){ 
+	    e.preventDefault(); // prevents submit event if button is a submit
+	    console.log($( this ).attr("id"));
+		var action_data = {
+			action : "add_product",
+    		product_id : $( this ).attr("id") 
+    	};
+    	ajax_route(action_data);
+	});
+	$(".btn-rm-from-cart").click(function(e){ 
+	    e.preventDefault(); // prevents submit event if button is a submit
+	    console.log($( this ).attr("id"));
+		var action_data = {
+			action : "remove_product",
+    		product_id : $( this ).attr("id") 
+    	};
+    	ajax_route(action_data);
+	});
+	$(".btn-rm-from-cart").click(function(e){ 
+	    e.preventDefault(); // prevents submit event if button is a submit
+	    console.log($( this ).attr("id"));
+		var action_data = {
+			action : "empty_cart",
+    		product_id : $( this ).attr("id") 
+    	};
+    	ajax_route(action_data);
+	}); 
 });
 
 function reset_field_classes(){

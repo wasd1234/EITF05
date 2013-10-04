@@ -1,7 +1,6 @@
 <?php
 include 'db_connect.php';
 include 'functions.php';
-sec_session_start();
 
 // make sure u have an action to take
 if(isset($_POST['action'])){
@@ -12,6 +11,15 @@ if(isset($_POST['action'])){
         case 'check_login':
             check_login();
             break;
+		case 'add_product':
+			sb_add_product();
+			break;
+		case 'remove_product':
+			sb_remove_product();
+			break;
+		case 'empty_cart':
+			sb_empty_cart();
+			break;
         default:
             break;
     }
@@ -59,6 +67,36 @@ function login_user() {
 	die();
 }
 
+function sb_add_product(){
+	if (isset($_POST['product_id']) && productExists($product_id)){
+		$product_id = $_POST['produt_id'];
+		$_SESSION['cart'][$product_id]++;
+	}else{
+		echo "No product added";
+	}
+	die();
+}
+
+function sb_remove_product(){
+	if (isset($_POST['product_id']) && productExists($product_id)){
+		$product_id = $_POST['produt_id'];
+		$_SESSION['cart'][$product_id]--;
+		if($_SESSION['cart'][$product_id] == 0) unset($_SESSION['cart'][$product_id]);
+	}else{
+		echo "No product added";
+	}
+	die();
+}
+
+function sb_empty_cart(){
+	if (isset($_POST['product_id']) && productExists($product_id)){
+		$product_id = $_POST['produt_id'];
+		unset($_SESSION['cart']);
+	}else{
+		echo "No product added";
+	}
+	die();
+}
 
 
 //  ___________ CREATE DB CONNECTION STARTS HERE __________  http://www.phpeasystep.com/phptu/6.html
