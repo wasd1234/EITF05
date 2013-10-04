@@ -17,9 +17,27 @@ if(isset($_POST['action'])){
     }
 }
 function create_user(){
+	
 	if(isset($_POST['user_name']) && isset($_POST['user_password']) && isset($_POST['user_email']) && isset($_POST['user_address'])){
-		$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
-		createTest('testtest', 'test24', $mysqli);
+		$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE); //Om all in data är satt, gör en anslutning mot databasen.
+		
+		$salt = mcrypt_create_iv(22, MCRYPT_DEV_URANDOM); //Skapa ett random salt.
+	var_dump("salt:" . $salt);
+	if(CRYPT_BLOWFISH == 1){
+		$password_hash = crypt($_POST['user_name']. $_POST['user_password'] , $salt); //Skapa ett hashat pw med blowfish cryptering.
+		var_dump("pass:" . $password_hash);
+		if (strlen($password_hash) < 13 || $password_hash == $salt){ 	//kontrolera så hashen är ok.
+			die('Invalid hash');
+		}else{
+						
+					createuser($_POST['user_name'], $password_hash, $_POST['user_email'], $_POST['user_address'],$salt, $mysqli); //Skicka vidare variablerna för att lägag in i databasen.
+				   
+				
+				
+			
+		}
+	}
+		
 		echo "Created user!";
 	}else{
 		echo "Require more info!";
@@ -27,8 +45,12 @@ function create_user(){
 	die();
 }
 
-function check_login() {
+function login_user() {
 	
+	if(isset($_POST['user_name']) && isset($_POST['user_password'])){
+		
+		
+	}
 	$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 	
 	login('test@exempel.com', '00807432eae173f652f2064bdca1b61b290b52d40e429a7d295d76a71084aa96c0233b82f1feac45529e0726559645acaed6f3ae58a286b9f075916ebf66cacc', $mysqli);

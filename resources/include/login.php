@@ -10,14 +10,14 @@
 				<td>Username</td>
 				<td>:</td>
 				<td>
-				<input name="username" type="text" id="username">
+				<input name="username" type="text" id="username" class="lu-input-field">
 				</td>
 			</tr>
 			<tr>
 				<td>Password</td>
 				<td>:</td>
 				<td>
-				<input name="password" type="text" id="password">
+				<input name="password" type="password" id="password" class="lu-input-field">
 				</td>
 			</tr>
 			<tr>

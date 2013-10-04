@@ -118,9 +118,9 @@ function login_check($mysqli) {
    }
 }
 
-function createTest($username, $password, $mysqli) {
-   // Using prepared Statements means that SQL injection is not possible. 
-   if ($stmt = $mysqli->prepare("INSERT INTO members (username, password_hash) VALUES ('$username', '$password')")) { 
+function createuser($username, $passwordHash, $useremail, $useraddress, $salt, $mysqli) {
+   
+   if ($stmt = $mysqli->prepare("INSERT INTO members (username, password_hash, salt, address, useremail) VALUES ('$username', '$passwordHash', '$salt', '$useraddress', '$useremail')")) { 
       $stmt->execute(); // Execute the prepared query.
    }
    
