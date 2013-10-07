@@ -13,40 +13,27 @@ function sec_session_start() {
 }
 
 function login($username , $password, $mysqli) {
-   // Using prepared Statements means that SQL injection is not possible. 
+	
    if ($stmt = $mysqli->prepare("SELECT username, password_hash, salt FROM members WHERE username = ?")) { 
-      $stmt->bind_param('s', $username); // Bind "$email" to parameter.
-      $stmt->execute(); // Execute the prepared query.
-      // $stmt->store_result();
-      $stmt->bind_result($username, $db_password, $salt); // get variables from result.
-      
-	  
+      $stmt->bind_param('s', $username); 
+      $stmt->execute(); 
+      $stmt->store_result();
+      $stmt->bind_result($username, $db_password, $salt); 
       $stmt->fetch();
-	  echo $db_password;
 	  	  
 	$options = array('salt' => $salt);
-	
 	$password = password_hash($password, PASSWORD_BCRYPT, $options);
 	
 	
 	
-	  // if(CRYPT_BLOWFISH == 1){
-      // $password = crypt($username. $password, $salt); // hash the password with the unique salt.
-//  	
-	  // }	
- 		// echo 'db pass:';
-		// echo $db_password;
-		// echo 'inskrivet pass';
-		// echo $password;
-      // if($stmt->num_rows == 1) { // If the user exists
-         // We check if the account is locked from too many login attempts
-         // if(checkbrute($user_id, $mysqli) == true) { 
-            // // Account is locked
-            // // Send an email to user saying their account is locked
-            // return false;
-         // } else {
-         if($db_password == $password) { // Check if the password in the database matches the password the user submitted. 
-            // Password is correct!
+      if($stmt->num_rows == 1) { // Kollar om användaren fanns
+         // Kollar så att inte accountet är låst
+         if(checkbrute($username, $mysqli) == true) { 
+            // accountet var låst, skicka email till användaren. 
+            echo "User account is locked";
+            return false;
+         } else {
+         if($db_password == $password) { 
  
  
                // $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
@@ -62,39 +49,42 @@ function login($username , $password, $mysqli) {
                
                return true;    
          } else {
-            // Password is not correct
-            // We record this attempt in the database
+            // Lösenordet var fel, lägg in de misslyckade försöket i databasen.
             $now = time();
             $mysqli->query("INSERT INTO login_attempts (username, time) VALUES ('$username', '$now')");
             
-			echo 'fel lösen';
+			echo 'wrong password';
             
             return false;
 			
          }
       }
-      // } else {
-         // // No user exists. 
-         // return false;
-      // }
+      }else{
+         // Fel användarnamn 
+         			echo 'wrong username';
+         
+         return false;
+      		}
+   		}
    }
 
 
-function checkbrute($user_id, $mysqli) {
-   // Get timestamp of current time
+function checkbrute($username, $mysqli) {
+
+
    $now = time();
-   // All login attempts are counted from the past 2 hours. 
-   $valid_attempts = $now - (2 * 60 * 60); 
+   // Alla login försök från de senaste 3 min räknas in. 
+   $valid_attempts = $now - (3 * 60); 
  
-   if ($stmt = $mysqli->prepare("SELECT time FROM login_attempts WHERE user_id = ? AND time > '$valid_attempts'")) { 
-      $stmt->bind_param('i', $user_id); 
-      // Execute the prepared query.
+   if ($stmt = $mysqli->prepare("SELECT time FROM login_attempts WHERE username = ? AND time > '$valid_attempts'")) { 
+      $stmt->bind_param('s', $username); 
       $stmt->execute();
       $stmt->store_result();
-      // If there has been more than 5 failed logins
+     
       if($stmt->num_rows > 5) {
          return true;
       } else {
+      	//vid fler än fem inloggninsförsök retuneras false
          return false;
       }
    }
@@ -141,11 +131,13 @@ function login_check($mysqli) {
 
 function createuser($username, $passwordHash, $useremail, $useraddress, $salt, $mysqli) {
    
-   if ($stmt = $mysqli->prepare("INSERT INTO members (username, password_hash, salt, address, useremail) VALUES ('$username', '$passwordHash', '$salt', '$useraddress', '$useremail')")) { 
+   if ($stmt = $mysqli->prepare("INSERT INTO members (username, password_hash, salt, address, useremail) VALUES (?, ?, ?, ?, ?)")) {
+      	$stmt ->bind_param('sssss', $username, $passwordHash, $salt, $useraddress, $useremail ); 
       $stmt->execute(); // Execute the prepared query.
    }
    
 }
+
 
 
 
