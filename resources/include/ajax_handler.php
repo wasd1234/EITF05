@@ -1,9 +1,10 @@
 <?php
-include 'db_connect.php';
-include 'functions.php';
-
+// include 'db_connect.php';
 // make sure u have an action to take
 if(isset($_POST['action'])){
+	include_once 'functions.php';
+	include_once '../config.php';
+	sec_session_start();
 	switch($_POST['action']) {
       	case 'create_user': 
            create_user(); 
@@ -11,11 +12,11 @@ if(isset($_POST['action'])){
         case 'login_user':
             login_user();
             break;
-		case 'add_product':
-			sb_add_product();
+		case 'increase_product':
+			sb_increase_product();
 			break;
-		case 'remove_product':
-			sb_remove_product();
+		case 'decrease_product':
+			sb_decrease_product();
 			break;
 		case 'empty_cart':
 			sb_empty_cart();
@@ -59,30 +60,47 @@ function login_user() {
 	die();
 }
 
-function sb_add_product(){
-	if (isset($_POST['product_id']) && productExists($product_id)){
-		$product_id = $_POST['produt_id'];
-		$_SESSION['cart'][$product_id]++;
+function sb_increase_product(){
+	if (isset($_POST['product_id']) && productExists($_POST['product_id'])){
+		$product_id = $_POST['product_id'];
+		// sec_session_start();
+		if( isset( $_SESSION['cart'][$product_id] ) ){
+			$_SESSION['cart'][$product_id]++;
+		}else{
+			$_SESSION['cart'][$product_id] = 1;
+		}
+		echo $_SESSION['cart'][$product_id];
 	}else{
 		echo "No product added";
 	}
 	die();
 }
 
-function sb_remove_product(){
-	if (isset($_POST['product_id']) && productExists($product_id)){
-		$product_id = $_POST['produt_id'];
-		$_SESSION['cart'][$product_id]--;
-		if($_SESSION['cart'][$product_id] == 0) unset($_SESSION['cart'][$product_id]);
+function sb_decrease_product(){
+	if (isset($_POST['product_id']) && productExists($_POST['product_id'])){
+		$product_id = $_POST['product_id'];
+		// sec_session_start();
+		// 
+		if( isset( $_SESSION['cart'][$product_id] ) ){
+			if( $_SESSION['cart'][$product_id] == 1 ){
+				unset( $_SESSION['cart'][$product_id] );
+				echo 0;
+			}else{
+				$_SESSION['cart'][$product_id]--;
+				echo $_SESSION['cart'][$product_id];
+			} 
+		}else{
+			echo 0;
+		}
 	}else{
-		echo "No product added";
+		echo "No product removed";
 	}
 	die();
 }
 
 function sb_empty_cart(){
-	if (isset($_POST['product_id']) && productExists($product_id)){
-		$product_id = $_POST['produt_id'];
+	if (isset($_POST['product_id']) && productExists($_POST['product_id'])){
+		$product_id = $_POST['product_id'];
 		unset($_SESSION['cart']);
 	}else{
 		echo "No product added";

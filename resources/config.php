@@ -1,11 +1,21 @@
 <?php
-defined("INCLUDE_PATH")  
-    or define("INCLUDE_PATH", realpath(dirname(__FILE__) . '/include'));  
+defined("INCLUDE_PATH") 
+	or define("INCLUDE_PATH", realpath(dirname(__FILE__) . '/include'));  
       
-defined("TEMPLATES_PATH")  
-    or define("TEMPLATES_PATH", realpath(dirname(__FILE__) . '/templates')); 
-	
+defined("TEMPLATES_PATH") 
+	or define("TEMPLATES_PATH", realpath(dirname(__FILE__) . '/templates')); 
 
+defined("HOST") 
+	or define("HOST", "localhost"); // The host you want to connect to.
+defined("USER") 
+	or define("USER", "root"); // The database username.
+defined("PASSWORD") 
+	or define("PASSWORD", "r00tpass"); // The database password. 
+defined("DATABASE") 
+	or define("DATABASE", "webshop"); // The database name.
+ 
+// $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+// If you are connecting via TCP/IP rather than a UNIX socket remember to add the port number as a parameter.
 	
 	// $db = new mysqli(ini_get('mysql.default_host'),
                      // ini_get('mysql.default_user'),

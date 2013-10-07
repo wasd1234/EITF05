@@ -1,4 +1,5 @@
-<?php	
+<?php
+	
 	// HERE'S HOW OUR PROJECT IS STRUCTURED -> http://net.tutsplus.com/tutorials/php/organize-your-next-php-project-the-right-way/
 	require_once("resources/config.php");
     require_once(INCLUDE_PATH . "/functions.php");
@@ -41,4 +42,3 @@
 	?>
 <?php
 	require_once(TEMPLATES_PATH . "/footer.php");
-	//http://net.tutsplus.com/tutorials/php/organize-your-next-php-project-the-right-way/

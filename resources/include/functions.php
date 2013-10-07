@@ -1,7 +1,7 @@
 <?php
 function sec_session_start() {
         $session_name = 'sec_session_id'; // Set a custom session name
-        $secure = false; // Set to true if using https.
+        $secure = true; // Set to true if using https.
         $httponly = true; // This stops javascript being able to access the session id. 
  
         ini_set('session.use_only_cookies', 1); // Forces sessions to only use cookies. 
@@ -35,15 +35,15 @@ function login($username , $password, $mysqli) {
          } else {
          if($db_password == $password) { 
  
+ 				
+               $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
  
-               // $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
-//  
                // $user_id = preg_replace("/[^0-9]+/", "", $user_id); // XSS protection as we might print this value
                // $_SESSION['user_id'] = $user_id; 
-               // $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
-               // $_SESSION['username'] = $username;
+               $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username); // XSS protection as we might print this value
+               $_SESSION['username'] = $username;
                // $_SESSION['login_string'] = hash('sha512', $password.$user_browser);
-               // // Login successful.
+               // Login successful.
                
                	echo "User logged in successfully!1";	
                
@@ -92,9 +92,7 @@ function checkbrute($username, $mysqli) {
 
 function login_check($mysqli) {
    // Check if all session variables are set
-   if(isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) {
-     $user_id = $_SESSION['user_id'];
-     $login_string = $_SESSION['login_string'];
+   if(isset($_SESSION['username'])) {
      $username = $_SESSION['username'];
  
      $user_browser = $_SERVER['HTTP_USER_AGENT']; // Get the user-agent string of the user.
@@ -141,4 +139,12 @@ function createuser($username, $passwordHash, $useremail, $useraddress, $salt, $
 
 
 
+//function to check if a product exists
+function productExists($product_id) {
+    //use sprintf to make sure that $product_id is inserted into the query as a number - to prevent SQL injection
+    return true;
+    // $sql = sprintf("SELECT * FROM php_shop_products WHERE id = %d;", $product_id); 
+//     
+    // return mysql_num_rows(mysql_query($sql)) > 0;
+}
 ?>

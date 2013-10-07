@@ -21,12 +21,12 @@
 				<td>9,90€</td>
 			</tr>
 			<tr>
-				<td><input id="btn-product-1" class="btn-add-to-cart" type="submit" name="Submit" value="Add to cart"></td>
-				<td><input id="btn-product-2" class="btn-add-to-cart" type="submit" name="Submit" value="Add to cart"></td>
+				<td><input id="btn-product-1" data-prod-id="1" class="btn-add-to-cart" type="submit" name="Submit" value="Add to cart"></td>
+				<td><input id="btn-product-2" data-prod-id="2" class="btn-add-to-cart" type="submit" name="Submit" value="Add to cart"></td>
 			</tr>
 			<tr>
-				<td><input id="btn-product-1" class="btn-rm-from-cart" type="submit" name="Submit" value="Remove"></td>
-				<td><input id="btn-product-2" class="btn-rm-from-cart" type="submit" name="Submit" value="Remove"></td>
+				<td><input id="btn-product-1" data-prod-id="1" class="btn-rm-from-cart" type="submit" name="Submit" value="Remove"></td>
+				<td><input id="btn-product-2" data-prod-id="2" class="btn-rm-from-cart" type="submit" name="Submit" value="Remove"></td>
 			</tr>
 		</tbody>
 	</table>

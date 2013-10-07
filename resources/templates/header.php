@@ -30,8 +30,9 @@
 			<?php
 			//TODO
 				// if("user_logged_in" == TRUE){
+					
 				if(FALSE){
-					echo "LOGGED IN AS USER:";
+					echo "LOGGED IN AS USER: " . $_SESSION['username'];
 					require_once(INCLUDE_PATH . "/shopping_basket.php");
 				}else{
 					require_once(INCLUDE_PATH . "/login.php");
