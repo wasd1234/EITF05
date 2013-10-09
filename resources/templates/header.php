@@ -31,7 +31,7 @@
 			//TODO
 				if(login_check()){
 				// if(true){
-					echo "<div id='user_logged_in_as'><p>Logged in as: " . $_SESSION['username'] . "</p>";
+					echo "<div id='user_logged_in_as'><p>Logged in as: <strong>" . $_SESSION['username'] . "</strong></p>";
 					echo '<input id="btn-logout" type="submit" name="Logout" value="Logout"></div>';
 				}else{
 					require_once(INCLUDE_PATH . "/login.php");

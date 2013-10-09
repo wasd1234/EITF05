@@ -59,6 +59,9 @@ li {
 	width: 250px;
 	float:right;
 }
+#sb-checkout-container{
+	width: 300px;
+}
 
 .invalid-field{
 	background-color: red

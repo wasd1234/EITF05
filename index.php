@@ -28,6 +28,15 @@
 	        case 'lost_password':
 	            $page = 'lost_password';
 	            break;
+	        case 'checkout':
+	            $page = 'checkout';
+	            break;
+	        case 'create_payment':
+	            $page = 'create_payment';
+	            break;
+	        case 'payment_success':
+	            $page = 'payment_success';
+	            break;
 	        default:
 	            $page = 'home';
 	            break;
@@ -38,4 +47,4 @@
 	</div>
 	<?php
 		require_once(TEMPLATES_PATH . "/rightPanel.php");
-		require_once(TEMPLATES_PATH . "/footer.php");
+		// require_once(TEMPLATES_PATH . "/footer.php");

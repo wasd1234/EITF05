@@ -8,12 +8,9 @@ jQuery(document).ready(function() {
 		reset_field_classes();
 		var ready = true;
 		$('.lu-input-field').each(function (index){
-			if($( this ).val().length > 0){
-				console.log("long: " + index);
-			}else{
+			if($( this ).val().length <= 0){
 				$( this ).addClass('invalid-field');
 				$( this ).append('Please enter some data');
-				console.log("short: "+ index);
 				ready = false;
 			}
 		});
@@ -77,20 +74,37 @@ jQuery(document).ready(function() {
 	    e.preventDefault(); // prevents submit event if button is a submit
 	    console.log($( this ).attr("id"));
 		var action_data = {
-			action : "decrease_product",
+			action : "remove_product",
     		product_id : $( this ).data("prod-id")
     	};
     	ajax_route(action_data);
 	});
-	$(".btn-empty-cart").click(function(e){ 
+	$("#btn-empty-cart").click(function(e){ 
 	    e.preventDefault(); // prevents submit event if button is a submit
-	    console.log($( this ).attr("id"));
 		var action_data = {
 			action : "empty_cart",
-    		product_id : $( this ).data("prod-id")
     	};
     	ajax_route(action_data);
-	}); 
+	});
+	$("#btn-checkout-cart").click(function(e){ 
+	    e.preventDefault(); // prevents submit event if button is a submit
+		document.location = "?page=checkout";
+	});
+	$(".btn-return-to-products").click(function(e){ 
+	    e.preventDefault(); // prevents submit event if button is a submit
+		document.location = "?page=products";
+	});
+	$("#btn-checkout-final").click(function(e){ 
+	    e.preventDefault(); // prevents submit event if button is a submit
+		document.location = "?page=create_payment";
+	});
+	$("#btn-finish-payment").click(function(e){ 
+	    e.preventDefault(); // prevents submit event if button is a submit
+		document.location = "?page=payment_success";
+	});
+	
+	
+	
 });
 
 function reset_field_classes(){
@@ -99,19 +113,24 @@ function reset_field_classes(){
 	});
 }
 function sb_update(){
-	var data = 'sb_update';
-    $.ajax({
-		type: "POST",
-		url: "/resources/include/ajax_handler.php",
-		data: data,
-		dataType: "html",
-	}) 
-	.success(function( data ) {
-		console.log( "Ajax success-response:", data );
-	})
-	.error(function(jqXHR, textStatus){
-		console.log( "Ajax error-response:", textStatus );
-	});
+	document.location.reload();
+	// var action_data = {
+		// action : "sb_update",
+	// };
+    // $.ajax({
+		// type: "POST",
+		// url: "/resources/include/ajax_handler.php",
+		// data: action_data,
+		// dataType: "html",
+	// }) 
+	// .success(function( data ){
+		// document.location.reload();
+		// // $('#right-panel').html(data);
+		// console.log( "Ajax error-response:", data );
+	// })
+	// .error(function(jqXHR, textStatus){
+		// console.log( "Ajax error-response:", textStatus );
+	// });
 }
 
 function account_locked(){
@@ -119,7 +138,7 @@ function account_locked(){
 }
 
 function account_logged_in(){
-	alert("Logged in!");
+	document.location = "?page=products";
 }
 
 function wrong_password(){
@@ -132,18 +151,19 @@ function wrong_username(){
 
 function created_account(){
 	alert("Created account!");
+	document.location = "?page=login_success";
 }
 
 function created_account_error(){
-	alert("Created account ERROR!");
+	alert("Could not create new user account, wait a minute and then try again!");
 }
 
 function login_error(){
-	alert("Login ERROR!");
+	alert("Could not login, wait a minute and then try again!");
 }
 
 function user_logged_out(){
-	alert("User_logged_out!");
+	document.location = "?page=home";
 }
 
 // function user_logged_in(){

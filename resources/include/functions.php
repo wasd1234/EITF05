@@ -34,6 +34,7 @@ function login($username , $password, $mysqli) {
 					$_SESSION['username'] = $username;
 					$_SESSION['login_string'] = hash('sha512', $password.$user_browser);
 					echo "login_success";
+					header("Location: http://www.example.com/");
 					die();
 				} else {// Wrong password, save as unsuccessful-attempt to db.
 					$now = time();
@@ -98,10 +99,10 @@ function createuser($username, $passwordHash, $useremail, $useraddress, $salt, $
 	if ($stmt = $mysqli->prepare("INSERT INTO members (username, password_hash, salt, address, useremail) VALUES (?, ?, ?, ?, ?)")) {
 		$stmt ->bind_param('sssss', $username, $passwordHash, $salt, $useraddress, $useremail ); 
 		if($stmt->execute()){// Execute the prepared query.
-			echo "created_account";
-			die();
+			return true;
 		} 		
-	} 
+	}
+	return false;
 }
 
 function logout_user(){

@@ -13,8 +13,8 @@ if(isset($_POST['action'])){
 		case 'increase_product':
 			sb_increase_product();
 			break;
-		case 'decrease_product':
-			sb_decrease_product();
+		case 'remove_product':
+			sb_remove_product();
 			break;
 		case 'empty_cart':
 			sb_empty_cart();
@@ -35,7 +35,9 @@ function create_user(){
 		$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE); //Om all in data är satt, gör en anslutning mot databasen.
 		$options = array('salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
 		$password_hash = password_hash($_POST['user_password'], PASSWORD_BCRYPT, $options);
-		createuser($_POST['user_name'], $password_hash, $_POST['user_email'], $_POST['user_address'],$options['salt'], $mysqli); //Skicka vidare variablerna för att lägag in i databasen.
+		if(createuser($_POST['user_name'], $password_hash, $_POST['user_email'], $_POST['user_address'],$options['salt'], $mysqli)){
+			login($_POST['user_name'] , $_POST['user_password'], $mysqli);
+		} //Skicka vidare variablerna för att lägga in i databasen.
 	}
 	echo "created_account_error";
 	die();
@@ -66,7 +68,7 @@ function sb_increase_product(){
 	die();
 }
 
-function sb_decrease_product(){
+function sb_remove_product(){
 	if (isset($_POST['product_id']) && productExists($_POST['product_id'])){
 		$product_id = $_POST['product_id'];
 		// sec_session_start();
@@ -75,30 +77,35 @@ function sb_decrease_product(){
 			if( $_SESSION['cart'][$product_id] == 1 ){
 				unset( $_SESSION['cart'][$product_id] );
 			}else{
-				$_SESSION['cart'][$product_id]--;
+				unset($_SESSION['cart'][$product_id]);
 			}
 			echo "sb_updated";
+			die();
 		}
-	}else{
-		echo "No product removed";
 	}
+	echo "sb_update_error";
 	die();
 }
 
 function sb_empty_cart(){
-	if (isset($_POST['product_id']) && productExists($_POST['product_id'])){
-		$product_id = $_POST['product_id'];
+	if($_SESSION['cart']){
 		unset($_SESSION['cart']);
 		echo "sb_updated";
-	}else{
-		echo "No product added";
+		die();
 	}
+	echo "sb_update_error";
 	die();
 }
 
 function sb_update(){
-	var_dump("sexpression");
-	echo "SB_UPDATE";
+	ob_start();
+	if(login_check()){
+		echo "<h2>Shopping Cart</h2>";
+		require_once(INCLUDE_PATH . "/shopping_basket.php");
+	}else{
+		echo"<p>You are not logged in!</p>";
+	}
+	ob_end_flush();
 	die();
 	// ob_start();
 	// include_once('shopping_basket.php');

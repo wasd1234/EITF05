@@ -24,7 +24,7 @@
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
 				<td>
-				<input id="btn-submit-login" type="submit" name="Submit" value="Login">
+					<input id="btn-submit-login" type="submit" name="Submit" value="Login">
 				</td>
 			</tr>
 		</tbody>
