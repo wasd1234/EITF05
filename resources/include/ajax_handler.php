@@ -1,6 +1,4 @@
 <?php
-// include 'db_connect.php';
-// make sure u have an action to take
 if(isset($_POST['action'])){
 	include_once 'functions.php';
 	include_once '../config.php';
@@ -21,42 +19,34 @@ if(isset($_POST['action'])){
 		case 'empty_cart':
 			sb_empty_cart();
 			break;
+		case 'sb_update':
+			sb_update();
+			break;
+		case 'logout_user':
+			logout_user();
+			break;
         default:
             break;
     }
 }
+
 function create_user(){
-	
 	if(isset($_POST['user_name']) && isset($_POST['user_password']) && isset($_POST['user_email']) && isset($_POST['user_address'])){
 		$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE); //Om all in data är satt, gör en anslutning mot databasen.
-		
-		
-	$options = array('salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-	
-	$password_hash = password_hash($_POST['user_password'], PASSWORD_BCRYPT, $options);
-	
-	createuser($_POST['user_name'], $password_hash, $_POST['user_email'], $_POST['user_address'],$options['salt'], $mysqli); //Skicka vidare variablerna för att lägag in i databasen.
-	
-		echo "Created user!";
-	}else{
-		echo "Require more info!";
+		$options = array('salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+		$password_hash = password_hash($_POST['user_password'], PASSWORD_BCRYPT, $options);
+		createuser($_POST['user_name'], $password_hash, $_POST['user_email'], $_POST['user_address'],$options['salt'], $mysqli); //Skicka vidare variablerna för att lägag in i databasen.
 	}
+	echo "created_account_error";
 	die();
 }
 
-
-
-
-
 function login_user() {
-			echo $_POST['user_name'];
-	
 	if(isset($_POST['user_name']) && isset($_POST['user_password'])){
-			$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+		$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 		login($_POST['user_name'] , $_POST['user_password'], $mysqli);
-		
-		
-	}	
+	}
+	echo 'login_error';
 	die();
 }
 
@@ -69,7 +59,7 @@ function sb_increase_product(){
 		}else{
 			$_SESSION['cart'][$product_id] = 1;
 		}
-		echo $_SESSION['cart'][$product_id];
+		echo "sb_updated";
 	}else{
 		echo "No product added";
 	}
@@ -84,13 +74,10 @@ function sb_decrease_product(){
 		if( isset( $_SESSION['cart'][$product_id] ) ){
 			if( $_SESSION['cart'][$product_id] == 1 ){
 				unset( $_SESSION['cart'][$product_id] );
-				echo 0;
 			}else{
 				$_SESSION['cart'][$product_id]--;
-				echo $_SESSION['cart'][$product_id];
-			} 
-		}else{
-			echo 0;
+			}
+			echo "sb_updated";
 		}
 	}else{
 		echo "No product removed";
@@ -102,10 +89,20 @@ function sb_empty_cart(){
 	if (isset($_POST['product_id']) && productExists($_POST['product_id'])){
 		$product_id = $_POST['product_id'];
 		unset($_SESSION['cart']);
+		echo "sb_updated";
 	}else{
 		echo "No product added";
 	}
 	die();
+}
+
+function sb_update(){
+	var_dump("sexpression");
+	echo "SB_UPDATE";
+	die();
+	// ob_start();
+	// include_once('shopping_basket.php');
+	// ob_end_flush();
 }
 
 

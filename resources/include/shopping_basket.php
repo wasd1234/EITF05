@@ -1,13 +1,7 @@
 <?php 
-// CREATE TABLE products
-// (
-// id int NOT NULL,
-// name varchar(255) NOT NULL,
-// description varchar(255),
-// price double,
-// PRIMARY KEY (id)
-// )
-// echo print_r($_SESSION, true);
+// Followed his guide
+// http://jameshamilton.eu/content/simple-php-shopping-cart-tutorial
+
 // echo print_r($_SESSION['bookingflow_sess']['cart'], true);
 if(! empty($_SESSION['cart']) ) { //if the cart isn't empty
 //show the cart

@@ -13,8 +13,10 @@ defined("PASSWORD")
 	or define("PASSWORD", "r00tpass"); // The database password. 
 defined("DATABASE") 
 	or define("DATABASE", "webshop"); // The database name.
- 
-// $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+
+	
+	// $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+
 // If you are connecting via TCP/IP rather than a UNIX socket remember to add the port number as a parameter.
 	
 	// $db = new mysqli(ini_get('mysql.default_host'),

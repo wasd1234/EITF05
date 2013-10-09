@@ -1,11 +1,10 @@
-<div id="siteControls">
-	<ul class="categories">
-		<li>PHP</li>
-		<li>HTML</li>
-		<li>CSS</li>
-	</ul>
-	<div class="ads">
-		Right-panel
-	</div>
-
+<div id="right-panel">
+<h2>Shopping Cart</h2>
+<?php
+	if(login_check()){
+		require_once(INCLUDE_PATH . "/shopping_basket.php");
+	}else{
+		echo"<p>You are not logged in!</p>";
+	}
+?>
 </div>

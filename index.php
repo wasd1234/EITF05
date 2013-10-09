@@ -37,8 +37,5 @@
 	?>
 	</div>
 	<?php
-		// TODO BUT IS OPTIONAL
-		// require_once(TEMPLATES_PATH . "/rightPanel.php");
-	?>
-<?php
-	require_once(TEMPLATES_PATH . "/footer.php");
+		require_once(TEMPLATES_PATH . "/rightPanel.php");
+		require_once(TEMPLATES_PATH . "/footer.php");

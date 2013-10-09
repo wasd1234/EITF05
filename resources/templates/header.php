@@ -29,11 +29,10 @@
 		<div id="site-login-container">
 			<?php
 			//TODO
-				// if("user_logged_in" == TRUE){
-					
-				if(FALSE){
-					echo "LOGGED IN AS USER: " . $_SESSION['username'];
-					require_once(INCLUDE_PATH . "/shopping_basket.php");
+				if(login_check()){
+				// if(true){
+					echo "<div id='user_logged_in_as'><p>Logged in as: " . $_SESSION['username'] . "</p>";
+					echo '<input id="btn-logout" type="submit" name="Logout" value="Logout"></div>';
 				}else{
 					require_once(INCLUDE_PATH . "/login.php");
 				}

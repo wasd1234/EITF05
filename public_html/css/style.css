@@ -4,8 +4,9 @@ html {
 body {
 	border: 2px solid #B3CBDE;
 	background-color: #F0F5F8;
-	padding: 40px;
+	padding: 20px 40px;
 	width: 750px;
+	min-height: 600px;
 	margin: 10px auto;
 }
 h1{
@@ -21,6 +22,7 @@ li {
 #nav-container{
 	width: 250px;
 	float:left;
+	margin: 45px 30px;
 }
 #site-heading{
 	/*width: 150px;*/
@@ -31,7 +33,7 @@ li {
 }
 #site-login-container {
 	background-color: #B3CBDE;
-	padding: 8px;
+	padding: 5px;
 	width: 250px;
 	overflow: hidden;
 	float:right;
@@ -42,7 +44,20 @@ li {
 }
 #footer{
 	text-align: center;
-	margin: 20px 0px 0px 0px;
+	margin: 0px 200px;
+	width: 300px;
+	position: absolute;
+	bottom: 0px;
+}
+#content{
+	width: 490px;
+	float: left;
+}
+#right-panel{
+	background-color: #B3CBDE;
+	padding: 5px;
+	width: 250px;
+	float:right;
 }
 
 .invalid-field{
