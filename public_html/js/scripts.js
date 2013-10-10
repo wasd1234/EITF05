@@ -26,20 +26,12 @@ jQuery(document).ready(function() {
 	$("#btn-create-user").click(function(e){
 	    e.preventDefault(); // prevents submit event if button is a submit
 	    console.log( "name: " + $('#new_username').val() + " pass: " + $('#new_password').val() + " mail: " + $('#new_email').val() );
-		// if(validate_username($('#new_username').val())){
-			// $('#new_username').addClass('valid-username');
-		// }else{
-			// $('#new_username').addClass('invalid-username');
-		// }
 		reset_field_classes();
 		var ready = true;
 		$('.cu-input-field').each(function (index){
-			if($( this ).val().length > 0){
-				console.log("long: " + index);
-			}else{
+			if($( this ).val().length <= 0){
 				$( this ).addClass('invalid-field');
 				$( this ).append('<p> Please enter some data </p>');
-				console.log("short: "+ index);
 				ready = false;
 			}
 		});
@@ -63,7 +55,6 @@ jQuery(document).ready(function() {
 	});
 	$(".btn-add-to-cart").click(function(e){ 
 	    e.preventDefault(); // prevents submit event if button is a submit
-	    console.log($( this ).attr("id"));
 		var action_data = {
 			action : "increase_product",
     		product_id : $( this ).data("prod-id") 
@@ -72,7 +63,6 @@ jQuery(document).ready(function() {
 	});
 	$(".btn-rm-from-cart").click(function(e){ 
 	    e.preventDefault(); // prevents submit event if button is a submit
-	    console.log($( this ).attr("id"));
 		var action_data = {
 			action : "remove_product",
     		product_id : $( this ).data("prod-id")
@@ -102,10 +92,11 @@ jQuery(document).ready(function() {
 	    e.preventDefault(); // prevents submit event if button is a submit
 		document.location = "?page=payment_success";
 	});
-	
-	
-	
 });
+
+function validate_userinput(text_string){
+	return true;
+}
 
 function reset_field_classes(){
 	$('.cu-input-field').each(function (index){
@@ -165,19 +156,6 @@ function login_error(){
 function user_logged_out(){
 	document.location = "?page=home";
 }
-
-// function user_logged_in(){
-	// alert("User_logged_in!");
-// }
-// 
-// function user_not_logged_in(){
-	// alert("User_not_logged_in!");
-// }
-
-// 
-// function validate_username(username){
-	// return true;
-// }
 
 function ajax_route(action_data){ 
 	var data = action_data;
