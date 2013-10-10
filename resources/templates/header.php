@@ -2,6 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 
+<?php  header("X-Content-Security-Policy: allow 'self'");?>
 <html lang="en">
 <head>
 	<script type="text/javascript" src="/public_html/js/jquery-1.10.2.min.js"></script>
@@ -28,9 +29,7 @@
 		</div>
 		<div id="site-login-container">
 			<?php
-			//TODO
 				if(login_check()){
-				// if(true){
 					echo "<div id='user_logged_in_as'><p>Logged in as: <strong>" . $_SESSION['username'] . "</strong></p>";
 					echo '<input id="btn-logout" type="submit" name="Logout" value="Logout"></div>';
 				}else{

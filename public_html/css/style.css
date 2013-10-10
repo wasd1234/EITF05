@@ -66,4 +66,23 @@ li {
 .invalid-field{
 	background-color: red
 }
+.sb-col-2{
+	width: 40px;
+	text-align: center;
+	display: inline-block;
+}
+.sb-col-3{
+	width: 50px;
+	text-align: left;
+	display: inline-block;
+}
+.blank_row{
+	height: 10px !important;
+}
+table {
+	border-collapse: separate;
+}
+#products-table td{
+	padding: 10px;
+}
 

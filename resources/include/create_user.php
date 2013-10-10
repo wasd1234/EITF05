@@ -11,14 +11,14 @@
 				<td>Username</td>
 				<td>:</td>
 				<td>
-				<input name="new_username" type="text" id="new_username" class="cu-input-field" placeholder="Username (2-22)">
+				<input name="new_username" type="text" id="new_username" class="cu-input-field" placeholder="Username">
 				</td>
 			</tr>
 			<tr>
 				<td>Password</td>
 				<td>:</td>
 				<td>
-				<input name="new_password" type="password" id="new_password" class="cu-input-field" placeholder="Password (8-22)">
+				<input name="new_password" type="password" id="new_password" class="cu-input-field" placeholder="Password">
 				</td>
 			</tr>
 			<tr>
